@@ -10,9 +10,9 @@
 */
 
 /* -------------------------
-   CONFIG: cambia estas constantes
+   CONFIG: cambiar/ aquí va el n8n
    ------------------------- */
-   const N8N_WEBHOOK_URL = "http://localhost:5678/webhook-test/d040993a-d8c0-4611-99eb-38a8bce38276"; // <- reemplaza con tu webhook
+   const N8N_WEBHOOK_URL = "http://localhost:5678/webhook/42197a58-f37a-4ccc-ba51-c21153417388/chat"; // <- reemplaza con tu webhook
    /* ------------------------- */
    
    const $ = sel => document.querySelector(sel);
