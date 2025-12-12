@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>VideoVision - Demo Mejorada</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- TOP BAR -->
+  <div class="top-bar">Lun - Jue 9:00 - 18:30 | Vier 9:00 - 18:00 • Precios sin IVA</div>
+
+  <!-- HEADER -->
+  <header class="header" id="main-header" role="banner">
+    <div class="header-left">
+      <a class="logo" href="#"><img src="img/logo.webp" alt="VideoVision" /></a>
+      <button class="mobile-menu-btn" aria-label="Abrir menú" aria-expanded="false">☰</button>
+    </div>
+
+    <div class="search-box" role="search">
+      <input type="search" placeholder="Buscar en la tienda..." aria-label="Buscar" />
+      <button class="search-btn" aria-label="Buscar">🔍</button>
+    </div>
+
+    <div class="header-actions">
+      <button class="icon-btn" title="Lista de deseos">♡</button>
+      <button class="icon-btn cart-btn" title="Carrito">🛒 Carro (1)</button>
+      <button class="icon-btn" title="Iniciar sesión">👤</button>
+    </div>
+  </header>
+
+  <!-- NAV -->
+  <nav class="navbar" id="navbar" role="navigation" aria-label="Principal">
+    <ul>
+      <li><a href="#">Categorías</a></li>
+      <li><a href="#">Inicio</a></li>
+      <li><a href="#">Capacitaciones</a></li>
+      <li><a href="#">Contacto</a></li>
+      <li><a href="#">Soporte Técnico</a></li>
+      <li><a href="#">Regístrate</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO (slider) -->
+  <section class="hero" id="hero">
+    <div class="hero-slider-wrapper">
+      <div class="hero-slide"><img data-src="img/img2.png" alt="Hero 1"></div>
+      <div class="hero-slide"><img data-src="img/img2.png" alt="Hero 2"></div>
+      <div class="hero-slide"><img data-src="img/img2.png" alt="Hero 3"></div>
+    </div>
+
+    <div class="hero-text">
+      <h1>Sistemas de Seguridad Avanzados</h1>
+      <p>Soluciones reales para proteger lo que más importa.</p>
+      <a class="btn-primary" href="#">Ver Productos</a>
+    </div>
+  </section>
+
+  <!-- PRODUCTOS -->
+  <main>
+    <section class="products">
+      <h2>Productos Destacados</h2>
+      <div class="product-grid">
+        <article class="product-card">
+          <img data-src="img/prod1.jpg" alt="Central de Incendio" />
+          <h3>Central de Incendio UL</h3>
+          <p>SKU 40779 • Certificado UL</p>
+          <button class="btn-secondary">Ver más</button>
+        </article>
+
+        <article class="product-card">
+          <img data-src="img/prod2.jpg" alt="Panel Inim" />
+          <h3>Panel Inim</h3>
+          <p>Tecnología avanzada</p>
+          <button class="btn-secondary">Ver más</button>
+        </article>
+
+        <article class="product-card">
+          <img data-src="img/prod3.jpg" alt="Detector de Humo" />
+          <h3>Detector de Humo Óptico</h3>
+          <p>Alta precisión</p>
+          <button class="btn-secondary">Ver más</button>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">© 2025 VideoVision. Todos los derechos reservados.</footer>
+
+  <!-- CHATBOT FLOATING BUTTON + CONTAINER -->
+  <div id="vv-chat-root">
+    <button id="vv-chat-button" aria-label="Abrir chat">
+      <img src="img/robot.jpeg" alt="Robot" /> <!-- icono pequeño -->
+    </button>
+
+    <div id="vv-chat-container" class="hidden" role="dialog" aria-label="Asistente VideoVision">
+      <div id="vv-chat-header">
+        <div class="vv-chat-title">
+          <img src="img/robot.jpeg" alt="robot" />
+          <div>
+            <strong>Asistente VideoVision</strong>
+            <small>Estamos para ayudarte</small>
+          </div>
+        </div>
+        <button id="vv-chat-close" aria-label="Cerrar">✖</button>
+      </div>
+
+      <div id="vv-chat-messages" aria-live="polite"></div>
+
+      <div id="vv-chat-input">
+        <input id="vv-chat-text" type="text" placeholder="Escribe un mensaje..." aria-label="Mensaje"/>
+        <button id="vv-chat-send">Enviar</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
