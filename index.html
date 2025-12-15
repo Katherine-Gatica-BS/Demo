@@ -84,35 +84,25 @@
   <footer class="footer">© 2025 VideoVision. Todos los derechos reservados.</footer>
 
   <!-- CHATBOT -->
-  <div id="vv-chat-root">
-    <button id="vv-chat-button" aria-label="Abrir chat">
-      <img src="img/robot.jpeg" alt="Robot" />
-    </button>
-    <div id="vv-chat-container" class="hidden" role="dialog" aria-label="Asistente VideoVision">
-      <div id="vv-chat-header">
-        <div class="vv-chat-title">
-          <img src="img/robot.jpeg" alt="robot" />
-          <div>
-            <strong>Asistente VideoVision</strong>
-            <small>Estamos para ayudarte</small>
-          </div>
-        </div>
-        <button id="vv-chat-close" aria-label="Cerrar">✖</button>
-      </div>
-      <div id="vv-chat-messages" aria-live="polite"></div>
-      <div id="vv-chat-input">
-        <input id="vv-chat-text" type="text" placeholder="Escribe un mensaje..." aria-label="Mensaje"/>
-        <button id="vv-chat-send">Enviar</button>
-      </div>
-    </div>
-  </div>
+  <div id="vv-chat-root"></div>
 
-  <script src="script.js" defer></script>
+  <!-- CONFIGURACIÓN DEL CHAT n8n -->
   <script>
+    // Configuración para n8n Chat Trigger público
     window.n8nChatConfig = {
-      webhookUrl: "https://kate16.app.n8n.cloud/webhook/42197a58-f37a-4ccc-ba51-c21153417388/chat"
+      webhookUrl: "https://kate16.app.n8n.cloud/webhook/42197a58-f37a-4ccc-ba51-c21153417388/chat",  // Confirma que este es el URL exacto del trigger
+      container: "#vv-chat-root",
+      floatingButton: true,
+      openOnLoad: false,  // Cambia a true si quieres que se abra al cargar
+      showWelcomeScreen: true,
+      initialMessages: ["¡Hola! Soy el asistente de VideoVision. ¿En qué puedo ayudarte?"]
     };
   </script>
-  <script src="https://cdn.n8n.io/chat/latest/chat.bundle.js"></script>
+
+  <!-- BUNDLE DEL CHAT n8n -->
+  <script src="https://cdn.n8n.io/chat/latest/chat.bundle.js" defer></script>
+
+  <!-- TU JS PERSONALIZADO -->
+  <script src="script.js"></script>
 </body>
 </html>
