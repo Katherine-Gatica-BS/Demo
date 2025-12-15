@@ -12,7 +12,7 @@
 /* -------------------------
    CONFIG: cambiar/ aquí va el n8n
    ------------------------- */
-   const N8N_WEBHOOK_URL = "https://kate16.app.n8n.cloud/webhook-test/041695b0-e8c7-4aa7-ba2b-8e6950761468"; // <- reemplaza con tu webhook
+   const N8N_WEBHOOK_URL = "https://kate16.app.n8n.cloud/webhook/041695b0-e8c7-4aa7-ba2b-8e6950761468"; // <- reemplaza con tu webhook
    /* ------------------------- */
    
    const $ = sel => document.querySelector(sel);
