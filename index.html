@@ -145,5 +145,16 @@
   <!-- CHAT OFICIAL n8n (FUNCIONA SIN CORS) -->
   <script src="https://cdn.n8n.io/chat/latest/chat.bundle.js"></script>
 
+
+
+  <script>
+  console.log("HTML cargado");
+</script>
+
+<script src="https://cdn.n8n.io/chat/latest/chat.bundle.js"
+        onload="console.log('n8n chat bundle cargado OK')"
+        onerror="console.error('ERROR cargando chat.bundle.js')">
+</script>
+
 </body>
 </html>
