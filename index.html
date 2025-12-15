@@ -2,116 +2,148 @@
 <html lang="es">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>VideoVision - Demo Mejorada</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>VideoVision</title>
 
-  <!-- ESTILOS PRINCIPALES -->
-  <link rel="stylesheet" href="styles.css" />
+  <!-- ESTILOS BASE -->
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Inter, Arial, sans-serif;
+    }
+
+    body {
+      background: #f5f7fa;
+      color: #1e2a34;
+    }
+
+    .top-bar {
+      background: #e73b2e;
+      color: #fff;
+      text-align: center;
+      padding: 6px;
+      font-size: 13px;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 20px;
+      background: linear-gradient(90deg, #0b304f, #14445f);
+      color: #fff;
+    }
+
+    header img {
+      height: 48px;
+    }
+
+    nav {
+      background: #123a4e;
+      padding: 12px;
+    }
+
+    nav ul {
+      display: flex;
+      gap: 24px;
+      justify-content: center;
+      list-style: none;
+    }
+
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .hero {
+      padding: 60px 20px;
+      text-align: center;
+      background: #fff;
+    }
+
+    .hero h1 {
+      font-size: 34px;
+      margin-bottom: 12px;
+      color: #0b304f;
+    }
+
+    .hero p {
+      color: #334e63;
+      margin-bottom: 20px;
+    }
+
+    .btn {
+      background: #ff5a3c;
+      color: #fff;
+      padding: 12px 20px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    footer {
+      text-align: center;
+      padding: 18px;
+      background: linear-gradient(90deg, #0b304f, #14445f);
+      color: #fff;
+      margin-top: 60px;
+    }
+  </style>
 </head>
 
 <body>
 
-  <!-- TOP BAR -->
   <div class="top-bar">
     Lun - Jue 9:00 - 18:30 | Vier 9:00 - 18:00 • Precios sin IVA
   </div>
 
-  <!-- HEADER -->
-  <header class="header" id="main-header" role="banner">
-    <div class="header-left">
-      <a class="logo" href="#">
-        <img src="img/logo.webp" alt="VideoVision" />
-      </a>
-      <button class="mobile-menu-btn" aria-label="Abrir menú" aria-expanded="false">
-        ☰
-      </button>
-    </div>
-
-    <div class="search-box" role="search">
-      <input type="search" placeholder="Buscar en la tienda..." aria-label="Buscar" />
-      <button class="search-btn" aria-label="Buscar">🔍</button>
-    </div>
-
-    <div class="header-actions">
-      <button class="icon-btn" title="Lista de deseos">♡</button>
-      <button class="icon-btn cart-btn" title="Carrito">🛒 Carro (1)</button>
-      <button class="icon-btn" title="Iniciar sesión">👤</button>
-    </div>
+  <header>
+    <img src="img/logo.webp" alt="VideoVision" />
+    <span>Soluciones en Seguridad</span>
   </header>
 
-  <!-- NAV -->
-  <nav class="navbar" id="navbar" role="navigation" aria-label="Principal">
+  <nav>
     <ul>
-      <li><a href="#">Categorías</a></li>
       <li><a href="#">Inicio</a></li>
+      <li><a href="#">Productos</a></li>
       <li><a href="#">Capacitaciones</a></li>
+      <li><a href="#">Soporte</a></li>
       <li><a href="#">Contacto</a></li>
-      <li><a href="#">Soporte Técnico</a></li>
-      <li><a href="#">Regístrate</a></li>
     </ul>
   </nav>
 
-  <!-- HERO -->
-  <section class="hero" id="hero">
-    <div class="hero-slider-wrapper">
-      <div class="hero-slide">
-        <img data-src="img/img2.png" alt="Hero 1" />
-      </div>
-      <div class="hero-slide">
-        <img data-src="img/img2.png" alt="Hero 2" />
-      </div>
-      <div class="hero-slide">
-        <img data-src="img/img2.png" alt="Hero 3" />
-      </div>
-    </div>
-
-    <div class="hero-text">
-      <h1>Sistemas de Seguridad Avanzados</h1>
-      <p>Soluciones reales para proteger lo que más importa.</p>
-      <a class="btn-primary" href="#">Ver Productos</a>
-    </div>
+  <section class="hero">
+    <h1>Sistemas de Seguridad Avanzados</h1>
+    <p>Soluciones reales para proteger lo que más importa.</p>
+    <a href="#" class="btn">Ver productos</a>
   </section>
 
-  <!-- PRODUCTOS -->
-  <main>
-    <section class="products">
-      <h2>Productos Destacados</h2>
-
-      <div class="product-grid">
-        <article class="product-card">
-          <img data-src="img/prod1.jpg" alt="Central de Incendio" />
-          <h3>Central de Incendio UL</h3>
-          <p>SKU 40779 • Certificado UL</p>
-          <button class="btn-secondary">Ver más</button>
-        </article>
-
-        <article class="product-card">
-          <img data-src="img/prod2.jpg" alt="Panel Inim" />
-          <h3>Panel Inim</h3>
-          <p>Tecnología avanzada</p>
-          <button class="btn-secondary">Ver más</button>
-        </article>
-
-        <article class="product-card">
-          <img data-src="img/prod3.jpg" alt="Detector de Humo" />
-          <h3>Detector de Humo Óptico</h3>
-          <p>Alta precisión</p>
-          <button class="btn-secondary">Ver más</button>
-        </article>
-      </div>
-    </section>
-  </main>
-
-  <!-- FOOTER -->
-  <footer class="footer">
+  <footer>
     © 2025 VideoVision. Todos los derechos reservados.
   </footer>
 
-  <!-- CHAT ROOT (NO TOCAR) -->
+  <!-- CONTENEDOR CHAT -->
   <div id="vv-chat-root"></div>
 
-  <!-- CHAT SCRIPT -->
-  <script src="script.js"></script>
+  <!-- CONFIGURACIÓN CHAT n8n -->
+  <script>
+    window.n8nChatConfig = {
+      webhookUrl: "https://kate16.app.n8n.cloud/webhook/videovision-chat",
+      container: "#vv-chat-root",
+      floatingButton: true,
+      openOnLoad: false,
+      showWelcomeScreen: true,
+      initialMessages: [
+        "¡Hola! Soy el asistente de VideoVision. ¿En qué puedo ayudarte?"
+      ]
+    };
+  </script>
+
+  <!-- CHAT OFICIAL n8n (FUNCIONA SIN CORS) -->
+  <script src="https://cdn.n8n.io/chat/latest/chat.bundle.js"></script>
 
 </body>
 </html>
