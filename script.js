@@ -1,153 +1,186 @@
-const $ = (sel, ctx = document) => ctx.querySelector(sel);
-const $$ = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
-
 document.addEventListener('DOMContentLoaded', () => {
-  initMobileNav();
-  initSearchSuggestions();
-  initHeroSlider();
-  initLazyLoad();
-  initStickyHeader();
-  initCartDemo();
-  initAccessibilityShortcuts();
+    const root = document.getElementById('vv-chat-root');
+    if (!root) return;
   
-  // Debug para el chatbot de n8n
-  setTimeout(() => {
-    const chatRoot = $('#vv-chat-root');
-    console.log('Contenedor del chat:', chatRoot);
-    if (chatRoot && chatRoot.innerHTML.trim() === '') {
-      console.warn('El bundle de n8n no cargó el chat. Activando chatbot personalizado como alternativa.');
-      initCustomChatbot();  // Activa el chatbot simple si n8n falla
-    } else {
-      console.log('Chat de n8n cargado correctamente.');
-    }
-  }, 3000);  // Espera 3 segundos para que el bundle cargue
-});
-
-// Función para chatbot personalizado (alternativa si n8n no funciona)
-function initCustomChatbot() {
-  const chatRoot = $('#vv-chat-root');
-  chatRoot.innerHTML = `
-    <div id="custom-chat" style="position: fixed; right: 20px; bottom: 20px; width: 300px; height: 400px; background: #fff; border: 1px solid #ccc; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); z-index: 9999; display: flex; flex-direction: column;">
-      <div style="background: #0b304f; color: #fff; padding: 10px; border-radius: 10px 10px 0 0;">Chat Asistente</div>
-      <div id="chat-messages" style="flex: 1; padding: 10px; overflow-y: auto;"></div>
-      <input id="chat-input" type="text" placeholder="Escribe un mensaje..." style="padding: 10px; border: none; border-top: 1px solid #ccc;">
-      <button id="chat-send" style="background: #ff5a3c; color: #fff; border: none; padding: 10px; cursor: pointer;">Enviar</button>
-    </div>
-  `;
+    // Shadow DOM para aislamiento total
+    const shadow = root.attachShadow({ mode: 'open' });
   
-  const messagesDiv = $('#chat-messages');
-  const input = $('#chat-input');
-  const sendBtn = $('#chat-send');
+    shadow.innerHTML = `
+      <style>
+        * {
+          box-sizing: border-box;
+          font-family: Inter, Arial, sans-serif;
+        }
   
-  sendBtn.addEventListener('click', async () => {
-    const message = input.value.trim();
-    if (!message) return;
-    messagesDiv.innerHTML += `<p><strong>Tú:</strong> ${message}</p>`;
-    input.value = '';
-    
-    // Envía a n8n (usando fetch para el trigger público)
-    try {
-      const response = await fetch('https://kate16.app.n8n.cloud/webhook/42197a58-f37a-4ccc-ba51-c21153417388/chat', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message })
-      });
-      const data = await response.json();
-      messagesDiv.innerHTML += `<p><strong>Asistente:</strong> ${data.output || 'Respuesta de n8n'}</p>`;
-    } catch (error) {
-      messagesDiv.innerHTML += `<p><strong>Asistente:</strong> Lo siento, hay un error. Intenta de nuevo.</p>`;
-      console.error('Error en fetch a n8n:', error);
-    }
-    messagesDiv.scrollTop = messagesDiv.scrollHeight;
-  });
-}
-
-/* ------------------ MOBILE NAV ------------------ */
-function initMobileNav() {
-  const btn = $('.mobile-menu-btn');
-  const nav = $('#navbar');
-  if (!btn || !nav) return;
-
-  btn.addEventListener('click', e => {
-    e.stopPropagation();
-    nav.classList.toggle('open');
-    btn.setAttribute('aria-expanded', nav.classList.contains('open'));
-  });
-
-  document.addEventListener('click', e => {
-    if (!nav.contains(e.target) && !btn.contains(e.target)) {
-      nav.classList.remove('open');
-      btn.setAttribute('aria-expanded', 'false');
-    }
-  });
-}
-
-/* ------------------ SEARCH ------------------ */
-function initSearchSuggestions() {
-  const container = $('.search-box');
-  if (!container) return;
-  const input = $('input', container);
-  const suggestions = ['Cámaras IP 4K', 'Central de incendio UL', 'Detector de humo', 'Panel Inim', 'Soporte técnico', 'Grabadores NVR'];
-  const list = document.createElement('ul');
-  list.className = 'search-suggestions';
-  list.hidden = true;
-  container.appendChild(list);
-
-  input.addEventListener('input', () => {
-    const q = input.value.trim().toLowerCase();
-    list.innerHTML = '';
-    if (!q) return (list.hidden = true);
-    suggestions.filter(s => s.toLowerCase().includes(q)).forEach(text => {
-      const li = document.createElement('li');
-      li.textContent = text;
-      li.onclick = () => { input.value = text; list.hidden = true; };
-      list.appendChild(li);
+        #fab {
+          position: fixed;
+          right: 24px;
+          bottom: 24px;
+          width: 56px;
+          height: 56px;
+          border-radius: 50%;
+          background: #ff5a3c;
+          color: #fff;
+          border: none;
+          font-size: 22px;
+          cursor: pointer;
+          box-shadow: 0 10px 25px rgba(0,0,0,.25);
+          z-index: 999999;
+        }
+  
+        #panel {
+          position: fixed;
+          right: 24px;
+          bottom: 90px;
+          width: 340px;
+          height: 460px;
+          background: #fff;
+          border-radius: 16px;
+          box-shadow: 0 20px 40px rgba(0,0,0,.25);
+          display: none;
+          flex-direction: column;
+          overflow: hidden;
+          z-index: 999999;
+        }
+  
+        header {
+          background: linear-gradient(90deg, #0b304f, #14445f);
+          color: #fff;
+          padding: 14px 16px;
+          font-weight: 600;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        }
+  
+        header button {
+          background: none;
+          border: none;
+          color: #fff;
+          font-size: 18px;
+          cursor: pointer;
+        }
+  
+        #messages {
+          flex: 1;
+          padding: 14px;
+          overflow-y: auto;
+          background: #f5f7fa;
+        }
+  
+        .bubble {
+          max-width: 80%;
+          padding: 10px 14px;
+          margin-bottom: 10px;
+          border-radius: 14px;
+          font-size: 14px;
+          line-height: 1.4;
+        }
+  
+        .user {
+          margin-left: auto;
+          background: #ff5a3c;
+          color: #fff;
+        }
+  
+        .bot {
+          background: #fff;
+          color: #1e2a34;
+          box-shadow: 0 4px 10px rgba(0,0,0,.08);
+        }
+  
+        footer {
+          display: flex;
+          padding: 10px;
+          gap: 8px;
+          border-top: 1px solid #ddd;
+        }
+  
+        footer input {
+          flex: 1;
+          padding: 10px 12px;
+          border-radius: 20px;
+          border: 1px solid #ccc;
+          outline: none;
+        }
+  
+        footer button {
+          width: 38px;
+          height: 38px;
+          border-radius: 50%;
+          border: none;
+          background: #ff5a3c;
+          color: #fff;
+          cursor: pointer;
+        }
+      </style>
+  
+      <button id="fab">💬</button>
+  
+      <div id="panel">
+        <header>
+          <span>Asistente VideoVision</span>
+          <button id="close">✕</button>
+        </header>
+  
+        <div id="messages"></div>
+  
+        <footer>
+          <input id="input" placeholder="Escribe tu mensaje…" />
+          <button id="send">➤</button>
+        </footer>
+      </div>
+    `;
+  
+    const fab = shadow.getElementById('fab');
+    const panel = shadow.getElementById('panel');
+    const close = shadow.getElementById('close');
+    const messages = shadow.getElementById('messages');
+    const input = shadow.getElementById('input');
+    const send = shadow.getElementById('send');
+  
+    fab.onclick = () => panel.style.display = 'flex';
+    close.onclick = () => panel.style.display = 'none';
+  
+    send.onclick = sendMessage;
+    input.addEventListener('keydown', e => {
+      if (e.key === 'Enter') sendMessage();
     });
-    list.hidden = list.children.length === 0;
+  
+    function addBubble(text, type) {
+      const div = document.createElement('div');
+      div.className = `bubble ${type}`;
+      div.textContent = text;
+      messages.appendChild(div);
+      messages.scrollTop = messages.scrollHeight;
+    }
+  
+    async function sendMessage() {
+      const text = input.value.trim();
+      if (!text) return;
+  
+      addBubble(text, 'user');
+      input.value = '';
+  
+      const typing = document.createElement('div');
+      typing.className = 'bubble bot';
+      typing.textContent = 'Escribiendo…';
+      messages.appendChild(typing);
+  
+      try {
+        const res = await fetch('https://kate16.app.n8n.cloud/webhook/videovision-chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message: text })
+        });
+  
+        const data = await res.json();
+        typing.remove();
+        addBubble(data.reply, 'bot');
+      } catch {
+        typing.remove();
+        addBubble('Error de conexión.', 'bot');
+      }
+    }
   });
-  document.addEventListener('click', e => { if (!container.contains(e.target)) list.hidden = true; });
-}
-
-/* ------------------ HERO SLIDER ------------------ */
-function initHeroSlider() {
-  const wrapper = $('.hero-slider-wrapper'); if (!wrapper) return;
-  const slides = $$('.hero-slide', wrapper); let index = 0;
-  function show(i) { slides.forEach((s, idx) => { s.style.display = idx===i?'block':'none'; const img=$('img',s); if(img) img.style.opacity=idx===i?'1':'0'; }); }
-  show(index);
-  setInterval(()=>{ index=(index+1)%slides.length; show(index); },4500);
-}
-
-/* ------------------ LAZY LOAD ------------------ */
-function initLazyLoad() {
-  const imgs = $$('img[data-src]'); if(!imgs.length) return;
-  const io=new IntersectionObserver(entries=>{
-    entries.forEach(e=>{
-      if(!e.isIntersecting) return;
-      e.target.src=e.target.dataset.src;
-      e.target.removeAttribute('data-src');
-      io.unobserve(e.target);
-    });
-  }, { rootMargin:'200px' });
-  imgs.forEach(img=>io.observe(img));
-}
-
-/* ------------------ STICKY HEADER ------------------ */
-function initStickyHeader() {
-  const header = $('#main-header'); if(!header) return;
-  const limit=header.offsetHeight;
-  window.addEventListener('scroll',()=>{ header.classList.toggle('sticky',window.scrollY>limit); });
-}
-
-/* ------------------ CART ------------------ */
-function initCartDemo() {
-  const btn = $('.cart-btn'); if(!btn) return;
-  let count = Number(localStorage.getItem('vv_cart')||0); render();
-  btn.onclick = e => { e.preventDefault(); count++; localStorage.setItem('vv_cart',count); render(); }
-  function render(){ btn.textContent=`🛒 Carro (${count})`; }
-}
-
-/* ------------------ ACCESSIBILITY ------------------ */
-function initAccessibilityShortcuts() {
-  const input = $('.search-box input');
-  document.addEventListener('keydown',e=>{ if(e.key==='/' && input){ e.preventDefault(); input.focus(); }});
-}
+  

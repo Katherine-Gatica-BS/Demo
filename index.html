@@ -4,22 +4,34 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>VideoVision - Demo Mejorada</title>
+
+  <!-- ESTILOS PRINCIPALES -->
   <link rel="stylesheet" href="styles.css" />
 </head>
+
 <body>
+
   <!-- TOP BAR -->
-  <div class="top-bar">Lun - Jue 9:00 - 18:30 | Vier 9:00 - 18:00 • Precios sin IVA</div>
+  <div class="top-bar">
+    Lun - Jue 9:00 - 18:30 | Vier 9:00 - 18:00 • Precios sin IVA
+  </div>
 
   <!-- HEADER -->
   <header class="header" id="main-header" role="banner">
     <div class="header-left">
-      <a class="logo" href="#"><img src="img/logo.webp" alt="VideoVision" /></a>
-      <button class="mobile-menu-btn" aria-label="Abrir menú" aria-expanded="false">☰</button>
+      <a class="logo" href="#">
+        <img src="img/logo.webp" alt="VideoVision" />
+      </a>
+      <button class="mobile-menu-btn" aria-label="Abrir menú" aria-expanded="false">
+        ☰
+      </button>
     </div>
+
     <div class="search-box" role="search">
       <input type="search" placeholder="Buscar en la tienda..." aria-label="Buscar" />
       <button class="search-btn" aria-label="Buscar">🔍</button>
     </div>
+
     <div class="header-actions">
       <button class="icon-btn" title="Lista de deseos">♡</button>
       <button class="icon-btn cart-btn" title="Carrito">🛒 Carro (1)</button>
@@ -42,10 +54,17 @@
   <!-- HERO -->
   <section class="hero" id="hero">
     <div class="hero-slider-wrapper">
-      <div class="hero-slide"><img data-src="img/img2.png" alt="Hero 1"></div>
-      <div class="hero-slide"><img data-src="img/img2.png" alt="Hero 2"></div>
-      <div class="hero-slide"><img data-src="img/img2.png" alt="Hero 3"></div>
+      <div class="hero-slide">
+        <img data-src="img/img2.png" alt="Hero 1" />
+      </div>
+      <div class="hero-slide">
+        <img data-src="img/img2.png" alt="Hero 2" />
+      </div>
+      <div class="hero-slide">
+        <img data-src="img/img2.png" alt="Hero 3" />
+      </div>
     </div>
+
     <div class="hero-text">
       <h1>Sistemas de Seguridad Avanzados</h1>
       <p>Soluciones reales para proteger lo que más importa.</p>
@@ -57,6 +76,7 @@
   <main>
     <section class="products">
       <h2>Productos Destacados</h2>
+
       <div class="product-grid">
         <article class="product-card">
           <img data-src="img/prod1.jpg" alt="Central de Incendio" />
@@ -64,12 +84,14 @@
           <p>SKU 40779 • Certificado UL</p>
           <button class="btn-secondary">Ver más</button>
         </article>
+
         <article class="product-card">
           <img data-src="img/prod2.jpg" alt="Panel Inim" />
           <h3>Panel Inim</h3>
           <p>Tecnología avanzada</p>
           <button class="btn-secondary">Ver más</button>
         </article>
+
         <article class="product-card">
           <img data-src="img/prod3.jpg" alt="Detector de Humo" />
           <h3>Detector de Humo Óptico</h3>
@@ -81,28 +103,15 @@
   </main>
 
   <!-- FOOTER -->
-  <footer class="footer">© 2025 VideoVision. Todos los derechos reservados.</footer>
+  <footer class="footer">
+    © 2025 VideoVision. Todos los derechos reservados.
+  </footer>
 
-  <!-- CHATBOT -->
+  <!-- CHAT ROOT (NO TOCAR) -->
   <div id="vv-chat-root"></div>
 
-  <!-- CONFIGURACIÓN DEL CHAT n8n -->
-  <script>
-    // Configuración para n8n Chat Trigger público
-    window.n8nChatConfig = {
-      webhookUrl: "https://kate16.app.n8n.cloud/webhook/42197a58-f37a-4ccc-ba51-c21153417388/chat",  // Confirma que este es el URL exacto del trigger
-      container: "#vv-chat-root",
-      floatingButton: true,
-      openOnLoad: false,  // Cambia a true si quieres que se abra al cargar
-      showWelcomeScreen: true,
-      initialMessages: ["¡Hola! Soy el asistente de VideoVision. ¿En qué puedo ayudarte?"]
-    };
-  </script>
-
-  <!-- BUNDLE DEL CHAT n8n -->
-  <script src="https://cdn.n8n.io/chat/latest/chat.bundle.js" defer></script>
-
-  <!-- TU JS PERSONALIZADO -->
+  <!-- CHAT SCRIPT -->
   <script src="script.js"></script>
+
 </body>
 </html>
