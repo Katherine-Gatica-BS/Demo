@@ -1,105 +1,198 @@
-/* -------------------------
-   CONFIGURACIÓN (para compatibilidad)
-   ------------------------- */
-// El script de n8n Chat ya maneja la comunicación, así que NO necesitas la URL aquí.
-const N8N_WEBHOOK_URL = "https://kate16.app.n8n.cloud/webhook/42197a58-f37a-4ccc-ba51-c21153417388/chat"; // Lo mantengo por si se usa para otros elementos, pero ya no se necesita en el fetch.
+/* =====================================================
+   script.js – ESTABLE + CHAT UI CONTROL
+===================================================== */
 
-// Selección de elementos del DOM
-const $ = sel => document.querySelector(sel);
-const $$ = sel => Array.from(document.querySelectorAll(sel));
+/* Helpers */
+const $ = (sel, ctx = document) => ctx.querySelector(sel);
+const $$ = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
 
 document.addEventListener('DOMContentLoaded', () => {
-  initChatbotUI();  // Inicializamos la interfaz del chat sin hacer fetch manual.
+  initMobileNav();
+  initSearchSuggestions();
+  initHeroSlider();
+  initLazyLoad();
+  initStickyHeader();
+  initCartDemo();
+  initAccessibilityShortcuts();
+  initChatUI(); // 👈 ESTO ES LO QUE FALTABA
 });
 
-/* -------------------------
-   CHATBOT UI + INTERACCIÓN
-   ------------------------- */
-function initChatbotUI() {
-  const rootBtn = document.getElementById('vv-chat-button');
-  const container = document.getElementById('vv-chat-container');
-  const closeBtn = document.getElementById('vv-chat-close');
-  const messages = document.getElementById('vv-chat-messages');
-  const input = document.getElementById('vv-chat-text');
-  const sendBtn = document.getElementById('vv-chat-send');
+/* --------------------------------------------------
+   MOBILE NAV
+-------------------------------------------------- */
+function initMobileNav() {
+  const btn = $('.mobile-menu-btn');
+  const nav = $('#navbar');
+  if (!btn || !nav) return;
 
-  if (!rootBtn || !container) return;
-
-  // Abrir / cerrar chat al hacer click en el botón
-  rootBtn.addEventListener('click', () => {
-    container.classList.toggle('hidden');
-    if (!container.classList.contains('hidden')) input.focus();
+  btn.addEventListener('click', e => {
+    e.stopPropagation();
+    nav.classList.toggle('open');
+    btn.setAttribute('aria-expanded', nav.classList.contains('open'));
   });
 
-  closeBtn.addEventListener('click', () => {
-    container.classList.add('hidden');
+  document.addEventListener('click', e => {
+    if (!nav.contains(e.target) && !btn.contains(e.target)) {
+      nav.classList.remove('open');
+      btn.setAttribute('aria-expanded', 'false');
+    }
+  });
+}
+
+/* --------------------------------------------------
+   SEARCH SUGGESTIONS
+-------------------------------------------------- */
+function initSearchSuggestions() {
+  const container = $('.search-box');
+  if (!container) return;
+
+  const input = $('input', container);
+  const suggestions = [
+    'Cámaras IP 4K',
+    'Central de incendio UL',
+    'Detector de humo',
+    'Panel Inim',
+    'Soporte técnico',
+    'Grabadores NVR'
+  ];
+
+  const list = document.createElement('ul');
+  list.className = 'search-suggestions';
+  list.hidden = true;
+  container.appendChild(list);
+
+  input.addEventListener('input', () => {
+    const q = input.value.trim().toLowerCase();
+    list.innerHTML = '';
+    if (!q) return (list.hidden = true);
+
+    suggestions
+      .filter(s => s.toLowerCase().includes(q))
+      .forEach(text => {
+        const li = document.createElement('li');
+        li.textContent = text;
+        li.onclick = () => {
+          input.value = text;
+          list.hidden = true;
+        };
+        list.appendChild(li);
+      });
+
+    list.hidden = list.children.length === 0;
   });
 
-  // Manejadores de mensajes de usuario y bot
-  function addUserMessage(text) {
-    const div = document.createElement('div');
-    div.className = 'vv-msg vv-user';
-    div.textContent = text;
-    messages.appendChild(div);
-    messages.scrollTop = messages.scrollHeight;
+  document.addEventListener('click', e => {
+    if (!container.contains(e.target)) list.hidden = true;
+  });
+}
+
+/* --------------------------------------------------
+   HERO SLIDER
+-------------------------------------------------- */
+function initHeroSlider() {
+  const wrapper = $('.hero-slider-wrapper');
+  if (!wrapper) return;
+
+  const slides = $$('.hero-slide', wrapper);
+  let index = 0;
+
+  function show(i) {
+    slides.forEach((s, idx) => {
+      s.style.display = idx === i ? 'block' : 'none';
+      const img = $('img', s);
+      if (img) img.style.opacity = idx === i ? '1' : '0';
+    });
   }
 
-  function addBotMessage(text) {
-    const wrap = document.createElement('div');
-    wrap.className = 'vv-msg vv-bot';
-    const img = document.createElement('img');
-    img.src = 'img/robot.jpeg';  // Icono del bot
-    img.alt = 'robot';
-    const bubble = document.createElement('div');
-    bubble.textContent = text;
-    wrap.appendChild(img);
-    wrap.appendChild(bubble);
-    messages.appendChild(wrap);
-    messages.scrollTop = messages.scrollHeight;
+  show(index);
+  setInterval(() => {
+    index = (index + 1) % slides.length;
+    show(index);
+  }, 4500);
+}
+
+/* --------------------------------------------------
+   LAZY LOAD
+-------------------------------------------------- */
+function initLazyLoad() {
+  const imgs = $$('img[data-src]');
+  if (!imgs.length) return;
+
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      e.target.src = e.target.dataset.src;
+      e.target.removeAttribute('data-src');
+      io.unobserve(e.target);
+    });
+  }, { rootMargin: '200px' });
+
+  imgs.forEach(img => io.observe(img));
+}
+
+/* --------------------------------------------------
+   STICKY HEADER
+-------------------------------------------------- */
+function initStickyHeader() {
+  const header = $('#main-header');
+  if (!header) return;
+
+  const limit = header.offsetHeight;
+  window.addEventListener('scroll', () => {
+    header.classList.toggle('sticky', window.scrollY > limit);
+  });
+}
+
+/* --------------------------------------------------
+   CART DEMO
+-------------------------------------------------- */
+function initCartDemo() {
+  const btn = $('.cart-btn');
+  if (!btn) return;
+
+  let count = Number(localStorage.getItem('vv_cart') || 0);
+  render();
+
+  btn.onclick = e => {
+    e.preventDefault();
+    count++;
+    localStorage.setItem('vv_cart', count);
+    render();
+  };
+
+  function render() {
+    btn.textContent = `🛒 Carro (${count})`;
   }
+}
 
-  function addTyping() {
-    const el = document.createElement('div');
-    el.className = 'vv-typing';
-    el.id = 'vv-typing';
-    el.textContent = 'El asistente está escribiendo...';
-    messages.appendChild(el);
-    messages.scrollTop = messages.scrollHeight;
-  }
+/* --------------------------------------------------
+   ACCESSIBILITY
+-------------------------------------------------- */
+function initAccessibilityShortcuts() {
+  const input = $('.search-box input');
+  document.addEventListener('keydown', e => {
+    if (e.key === '/' && input) {
+      e.preventDefault();
+      input.focus();
+    }
+  });
+}
 
-  function removeTyping() {
-    const t = document.getElementById('vv-typing');
-    if (t) t.remove();
-  }
+/* --------------------------------------------------
+   CHAT UI (CLAVE)
+-------------------------------------------------- */
+function initChatUI() {
+  const btn = $('#vv-chat-button');
+  const box = $('#vv-chat-container');
+  const close = $('#vv-chat-close');
 
-  // El botón de enviar (dentro de la interacción con n8n)
-  async function sendMessage() {
-    const text = input.value.trim();
-    if (!text) return;
+  if (!btn || !box || !close) return;
 
-    // Mostramos el mensaje del usuario en el chat
-    addUserMessage(text);
-    input.value = '';  // Limpiamos el campo de entrada
-    addTyping();  // Indicamos que el bot está escribiendo
-
-    // Aquí no necesitamos hacer fetch manual a n8n, porque el chat integrado ya maneja la comunicación.
-    // La respuesta se gestionará automáticamente por el script cargado desde n8n.
-
-    // Se simula que el bot está escribiendo mientras espera la respuesta real
-    setTimeout(() => {
-      removeTyping();
-      addBotMessage('¡Gracias por tu mensaje! Estoy procesando tu solicitud...');
-    }, 1000);
-  }
-
-  // Manejamos el evento del botón de enviar
-  sendBtn.addEventListener('click', sendMessage);
-  input.addEventListener('keydown', e => {
-    if (e.key === 'Enter') sendMessage();
+  btn.addEventListener('click', () => {
+    box.classList.toggle('hidden');
   });
 
-  // Saludo inicial cuando se carga el chat
-  setTimeout(() => {
-    addBotMessage('¡Hola! 👋 Soy el asistente de VideoVision. ¿En qué puedo ayudarte hoy?');
-  }, 600);
+  close.addEventListener('click', () => {
+    box.classList.add('hidden');
+  });
 }
