@@ -5,18 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>VideoVision</title>
 
-  <!-- ESTILOS BASE -->
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: Inter, Arial, sans-serif;
-    }
-
     body {
+      margin: 0;
+      font-family: Inter, Arial, sans-serif;
       background: #f5f7fa;
-      color: #1e2a34;
     }
 
     .top-bar {
@@ -28,60 +21,9 @@
     }
 
     header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
       padding: 16px 20px;
       background: linear-gradient(90deg, #0b304f, #14445f);
       color: #fff;
-    }
-
-    header img {
-      height: 48px;
-    }
-
-    nav {
-      background: #123a4e;
-      padding: 12px;
-    }
-
-    nav ul {
-      display: flex;
-      gap: 24px;
-      justify-content: center;
-      list-style: none;
-    }
-
-    nav a {
-      color: #fff;
-      text-decoration: none;
-      font-weight: 600;
-    }
-
-    .hero {
-      padding: 60px 20px;
-      text-align: center;
-      background: #fff;
-    }
-
-    .hero h1 {
-      font-size: 34px;
-      margin-bottom: 12px;
-      color: #0b304f;
-    }
-
-    .hero p {
-      color: #334e63;
-      margin-bottom: 20px;
-    }
-
-    .btn {
-      background: #ff5a3c;
-      color: #fff;
-      padding: 12px 20px;
-      border-radius: 8px;
-      text-decoration: none;
-      font-weight: 600;
     }
 
     footer {
@@ -101,40 +43,28 @@
   </div>
 
   <header>
-    <img src="img/logo.webp" alt="VideoVision" />
-    <span>Soluciones en Seguridad</span>
+    <h2>VideoVision</h2>
   </header>
 
-  <nav>
-    <ul>
-      <li><a href="#">Inicio</a></li>
-      <li><a href="#">Productos</a></li>
-      <li><a href="#">Capacitaciones</a></li>
-      <li><a href="#">Soporte</a></li>
-      <li><a href="#">Contacto</a></li>
-    </ul>
-  </nav>
-
-  <section class="hero">
+  <main style="padding:40px; text-align:center;">
     <h1>Sistemas de Seguridad Avanzados</h1>
     <p>Soluciones reales para proteger lo que más importa.</p>
-    <a href="#" class="btn">Ver productos</a>
-  </section>
+  </main>
 
   <footer>
-    © 2025 VideoVision. Todos los derechos reservados.
+    © 2025 VideoVision
   </footer>
 
   <!-- CONTENEDOR CHAT -->
   <div id="vv-chat-root"></div>
 
-  <!-- CONFIGURACIÓN CHAT n8n -->
+  <!-- CONFIG CHAT -->
   <script>
     window.n8nChatConfig = {
       webhookUrl: "https://kate16.app.n8n.cloud/webhook/videovision-chat",
       container: "#vv-chat-root",
       floatingButton: true,
-      openOnLoad: false,
+      openOnLoad: true,
       showWelcomeScreen: true,
       initialMessages: [
         "¡Hola! Soy el asistente de VideoVision. ¿En qué puedo ayudarte?"
@@ -142,19 +72,12 @@
     };
   </script>
 
-  <!-- CHAT OFICIAL n8n (FUNCIONA SIN CORS) -->
-  <script src="https://cdn.n8n.io/chat/latest/chat.bundle.js"></script>
-
-
-
-  <script>
-  console.log("HTML cargado");
-</script>
-
-<script src="https://cdn.n8n.io/chat/latest/chat.bundle.js"
-        onload="console.log('n8n chat bundle cargado OK')"
-        onerror="console.error('ERROR cargando chat.bundle.js')">
-</script>
+  <!-- SCRIPT CORRECTO DEL CHAT -->
+  <script
+    src="https://unpkg.com/@n8n/chat/dist/chat.bundle.js"
+    onload="console.log('✅ Chat n8n cargado correctamente')"
+    onerror="console.error('❌ Error cargando chat n8n')">
+  </script>
 
 </body>
 </html>
