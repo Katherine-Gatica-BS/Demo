@@ -11,22 +11,31 @@ body {
 
 /* TOP BAR */
 .top-bar {
-  background: #e73b2e; color: #fff; text-align: center; padding: 6px 12px; font-size: 13px;
+  background: #e73b2e;
+  color: #fff;
+  text-align: center;
+  padding: 6px 12px;
+  font-size: 13px;
 }
 
 /* HEADER */
 .header {
-  display:flex; align-items:center; justify-content:space-between;
-  gap:12px; padding:14px 20px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  padding:14px 20px;
   background: linear-gradient(90deg,#0b304f,#14445f);
-  color:#fff; position:relative; z-index:50;
+  color:#fff;
+  position:relative;
+  z-index:50;
   transition:box-shadow .2s ease;
 }
 .header.sticky { position:fixed; top:0; left:0; right:0; box-shadow:0 6px 18px rgba(0,0,0,0.12); }
 .header-left { display:flex; align-items:center; gap:12px; }
 .logo img { height:50px; display:block; }
 
-/* mobile menu */
+/* MOBILE MENU */
 .mobile-menu-btn { display:none; background:transparent; border:none; color:#fff; font-size:22px; cursor:pointer; }
 
 /* SEARCH */
@@ -34,7 +43,7 @@ body {
 .search-box input { flex:1; padding:10px 12px; border-radius:6px 0 0 6px; border:none; font-size:15px; }
 .search-box .search-btn { background:#ff5a3c; border:none; padding:10px 14px; border-radius:0 6px 6px 0; color:#fff; cursor:pointer; font-weight:600; }
 
-/* suggestions */
+/* SUGGESTIONS */
 .search-suggestions {
   background:#fff; border:1px solid rgba(0,0,0,0.08); border-top:none; list-style:none;
   position:absolute; left:0; top:calc(100% + 2px); width:100%; box-shadow:0 6px 18px rgba(0,0,0,0.08);
@@ -64,11 +73,6 @@ body {
 .hero-text p { margin-bottom:18px; color:#334e63; }
 .btn-primary { display:inline-block; background:#ff5a3c; color:#fff; padding:12px 18px; border-radius:8px; text-decoration:none; font-weight:700; }
 
-/* DOTS */
-.hero-dots { position:absolute; left:50%; transform:translateX(-50%); bottom:12px; display:flex; gap:8px; z-index:70; }
-.hero-dot { width:10px; height:10px; background:rgba(255,255,255,0.6); border-radius:50%; border:none; cursor:pointer; padding:0; }
-.hero-dot.active { background:#ff5a3c; }
-
 /* PRODUCTS */
 .products { padding:44px 18px; text-align:center; }
 .product-grid { display:grid; gap:18px; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); margin-top:20px; }
@@ -97,7 +101,7 @@ body {
 
 /* ========================
    CHATBOT STYLES
-   ======================== */
+======================== */
 #vv-chat-root { position:fixed; right:20px; bottom:20px; z-index:9999; font-family:inherit; }
 
 /* chat button */
